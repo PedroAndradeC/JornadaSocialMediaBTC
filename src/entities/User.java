@@ -7,23 +7,12 @@ public class User {
     private String email;
     private String password;
     private String name;
-    private String birthdate;
-    private String relationship;
 
-    public User (String email, String password, String name, String birthdate, String relationship) {
+    public User (String email, String password, String name) {
         super();
         this.email = email;
         this.password = password;
         this.name = name;
-        this.birthdate = birthdate;
-        this.relationship = relationship;
-    }
-
-    public User(String name, String birthdate, String relationship) {
-        super();
-        this.name = name;
-        this.birthdate = birthdate;
-        this.relationship = relationship;
     }
 
     public String getEmail() {
@@ -50,19 +39,8 @@ public class User {
         this.name = name;
     }
 
-    public String getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
-    }
-
-    public String getRelationship() {
-        return relationship;
-    }
-
-    public void setRelationship(String relationship) {
-        this.relationship = relationship;
+    @Override
+    public String toString() {
+        return "nome: " + name + " email: " + email + " senha: " + password;
     }
 }
