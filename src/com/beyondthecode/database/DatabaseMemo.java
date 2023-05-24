@@ -1,6 +1,6 @@
-package database;
+package com.beyondthecode.database;
 
-import entities.User;
+import com.beyondthecode.entities.User;
 
 import java.util.ArrayList;
 

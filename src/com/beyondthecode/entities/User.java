@@ -1,5 +1,6 @@
-package entities;
+package com.beyondthecode.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -8,11 +9,17 @@ public class User {
     private String password;
     private String name;
 
+    private List<Post> posts;
+
+    public User () {
+        super();
+    }
     public User (String email, String password, String name) {
         super();
         this.email = email;
         this.password = password;
         this.name = name;
+        this.posts = new ArrayList<>();
     }
 
     public String getEmail() {

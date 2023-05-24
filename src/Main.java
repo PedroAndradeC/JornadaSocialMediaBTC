@@ -1,6 +1,7 @@
-import database.DatabaseMemo;
-import entities.User;
-import enums.Message;
+import com.beyondthecode.database.DatabaseMemo;
+import com.beyondthecode.entities.Post;
+import com.beyondthecode.entities.User;
+import com.beyondthecode.enums.Message;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -57,15 +58,16 @@ public class Main {
     System.out.println("Password");
     String password = sc.nextLine();
 
-    Optional<User> filteredUser = DatabaseMemo.userArrayList.stream().filter(user -> user.getEmail().equals(email) && user.getPassword().equals(password)).findFirst();
+    Optional<User> filteredUser = DatabaseMemo.userArrayList.stream().filter(user -> user.getEmail().equals(email)
+            && user.getPassword().equals(password)).findFirst();
 
     if(filteredUser.isPresent()) {
       System.out.println(Message.LOGIN_SUCCESS);
+
     } else {
       System.out.println(Message.LOGIN_FAIL);
     }
   }
-
 }
 
 // Requisitos mínimos de entrega

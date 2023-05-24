@@ -1,4 +1,4 @@
-package entities;
+package com.beyondthecode.entities;
 
 public class Comment {
 
