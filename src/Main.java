@@ -1,7 +1,7 @@
 import database.DatabaseMemo;
 import entities.User;
+import enums.Message;
 
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -43,9 +43,9 @@ public class Main {
     Optional<User> filteredEmail = DatabaseMemo.userArrayList.stream().filter(user -> user.getEmail().equals(email)).findFirst();
     if(filteredEmail.isEmpty()) {
       DatabaseMemo.userArrayList.add(new User(email, password, name));
-      System.out.println("Usuário cadastrado com sucesso!");
+      System.out.println(Message.REGISTER_SUCCESS);
     } else {
-      System.out.println("Email já cadastrado!");
+      System.out.println(Message.REGISTER_FAIL);
     }
   }
 
@@ -60,9 +60,9 @@ public class Main {
     Optional<User> filteredUser = DatabaseMemo.userArrayList.stream().filter(user -> user.getEmail().equals(email) && user.getPassword().equals(password)).findFirst();
 
     if(filteredUser.isPresent()) {
-      System.out.println("Login efetuado com sucesso!");
+      System.out.println(Message.LOGIN_SUCCESS);
     } else {
-      System.out.println("Email ou senha inválido!");
+      System.out.println(Message.LOGIN_FAIL);
     }
   }
 

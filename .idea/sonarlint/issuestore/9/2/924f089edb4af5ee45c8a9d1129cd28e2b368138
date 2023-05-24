@@ -1,0 +1,47 @@
+
+g
+java:S1301"KReplace this "switch" statement by "if" statements to increase readability.(€ä¿;8ýÒ…Ò„1
+D
+java:S2189
+""Add an end condition to this loop.(˜ïˆžÿÿÿÿÿ8š×…Ò„1
+Y
+java:S1854"<Remove this useless assignment to local variable "password".(ºè¥É8õ×…Ò„1
+[
+java:S1854"9Remove this useless assignment to local variable "email".(ûÐÍ×ûÿÿÿÿ8õ×…Ò„1
+b
+java:S1854$"@Remove this useless assignment to local variable "relationship".(³ÙÕ²üÿÿÿÿ8õ×…Ò„1
+_
+java:S1854""=Remove this useless assignment to local variable "birthdate".(Ó ÿ­øÿÿÿÿ8ö×…Ò„1
+Z
+java:S1854 "8Remove this useless assignment to local variable "name".(ä‹Å üÿÿÿÿ8ö×…Ò„1
+_
+java:S1854"=Remove this useless assignment to local variable "password1".(Ž‘÷ûÿÿÿÿ8ö×…Ò„1
+W
+java:S1854":Remove this useless assignment to local variable "email1".(­¢úð8÷×…Ò„1
+U	java:S106"9Replace this use of System.out or System.err by a logger.(Ûåâœ8ÿØ…Ò„1
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ñ´ŽÃ8ÿØ…Ò„1
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ªÍÖ„8€Ù…Ò„1
+=	java:S131""Add a default case to this switch.(€ä¿;8ˆÙ…Ò„1
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ÛÜí¸8‹Ù…Ò„1
+L
+java:S1481"*Remove this unused "email" local variable.(ûÐÍ×ûÿÿÿÿ8ŒÙ…Ò„1
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ÔÈ™Ë8ŒÙ…Ò„1
+J
+java:S1481"-Remove this unused "password" local variable.(ºè¥É8’Ù…Ò„1
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ÛÜí¸8“Ù…Ò„1
+H
+java:S1481"+Remove this unused "email1" local variable.(­¢úð8”Ù…Ò„1
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ÔÈ™Ë8”Ù…Ò„1
+P
+java:S1481".Remove this unused "password1" local variable.(Ž‘÷ûÿÿÿÿ8•Ù…Ò„1
+Z	java:S106"9Replace this use of System.out or System.err by a logger.(üáÕ‡þÿÿÿÿ8•Ù…Ò„1
+K
+java:S1481 ")Remove this unused "name" local variable.(ä‹Å üÿÿÿÿ8•Ù…Ò„1
+Z	java:S106!"9Replace this use of System.out or System.err by a logger.(›ùøÅûÿÿÿÿ8–Ù…Ò„1
+P
+java:S1481"".Remove this unused "birthdate" local variable.(Ó ÿ­øÿÿÿÿ8™Ù…Ò„1
+Z	java:S106#"9Replace this use of System.out or System.err by a logger.(‡ÈùÛýÿÿÿÿ8™Ù…Ò„1
+S
+java:S1481$"1Remove this unused "relationship" local variable.(³ÙÕ²üÿÿÿÿ8šÙ…Ò„1
+G
+java:S1128"*Remove this unused import 'entities.User'.(ÚÖ¼—8šÙ…Ò„1
