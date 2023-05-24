@@ -6,16 +6,16 @@ import com.beyondthecode.enums.Message;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class Main {
-
+public class Main{
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     int menu;
-
-    while (true) {
+    boolean validar = true;
+    while (validar == true) {
       System.out.println("Bem vindo ao BTC");
       System.out.println("1 - Login");
       System.out.println("2 - Cadastro");
+      System.out.println("3 - Finalizar");
       menu = sc.nextInt();
 
       switch (menu) {
@@ -27,6 +27,8 @@ public class Main {
           createUser();
           System.out.println(DatabaseMemo.userArrayList);
           break;
+        default:
+          validar = false;
       }
     }
   }
@@ -63,7 +65,25 @@ public class Main {
 
     if(filteredUser.isPresent()) {
       System.out.println(Message.LOGIN_SUCCESS);
+      //Local de continuar código
+      //Segundo Menu
+      boolean validar = true;
+      while(validar == true){
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("9 - Finalizar");
 
+        int menu2 = sc.nextInt();
+        switch (menu2) {
+          case 1:
+            break;
+          case 2:
+            break;
+          default:
+            validar = false;
+        }
+      }
     } else {
       System.out.println(Message.LOGIN_FAIL);
     }
