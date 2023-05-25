@@ -11,7 +11,7 @@ public class User {
 
     private List<Post> posts;
 
-    public User () {
+    public User (String title, String content) {
         super();
     }
     public User (String email, String password, String name) {

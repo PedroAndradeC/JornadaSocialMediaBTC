@@ -1,4 +1,5 @@
 import com.beyondthecode.database.DatabaseMemo;
+import com.beyondthecode.database.DatabasePost;
 import com.beyondthecode.entities.Post;
 import com.beyondthecode.entities.User;
 import com.beyondthecode.enums.Message;
@@ -69,14 +70,17 @@ public class Main{
       //Segundo Menu
       boolean validar = true;
       while(validar == true){
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        System.out.println("9 - Finalizar");
+        System.out.println("- MENU -");
+        System.out.println("1 - Meus Posts");
+        System.out.println("2 - Encontrar Amigos");
+        System.out.println("3 - Ambiente de aprendizagem");
+        System.out.println("4 - Lobby da Gameplay");
+        System.out.println("9 - LOGOUT");
 
-        int menu2 = sc.nextInt();
-        switch (menu2) {
+        int menu = sc.nextInt();
+        switch (menu) {
           case 1:
+            Post();
             break;
           case 2:
             break;
@@ -87,6 +91,42 @@ public class Main{
     } else {
       System.out.println(Message.LOGIN_FAIL);
     }
+  }
+  public static void Post() {
+    Scanner sc = new Scanner(System.in);
+    boolean validar = true;
+    while(validar == true){
+      System.out.println("Menu - Post");
+      System.out.println("1 - Adicionar Post");
+      System.out.println("2 - Alterar Post");
+      System.out.println("2 - Excluir Post");
+      System.out.println("9 - Voltar");
+
+      int menu = sc.nextInt();
+      switch (menu) {
+        case 1:
+          AddPost();
+          System.out.println(DatabasePost.postArrayList);
+          break;
+        case 2:
+          System.out.println(Message.POST_CHANGE);
+          break;
+        case 3:
+          System.out.println(Message.POST_EXCLUIR);
+          break;
+        default:
+          validar = false;
+      }
+    }
+  }
+  public static void AddPost(){
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Digite o Titulo do Post");
+    String title = sc.nextLine();
+    System.out.println("Digite o conteúdo do Post");
+    String content = sc.nextLine();
+
+    DatabasePost.postArrayList.add(new Post(title, content));
   }
 }
 

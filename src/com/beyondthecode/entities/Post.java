@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Post {
-
     private String contents;
     private User user;
     private List<Comment> comments;
     private int likes;
 
-    public Post (){
+    public Post (String title, String content){
         super();
     }
 
@@ -49,4 +48,5 @@ public class Post {
     public void like(){
         likes++;
     }
+
 }
