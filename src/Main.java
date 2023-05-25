@@ -1,5 +1,4 @@
 import com.beyondthecode.database.DatabaseMemo;
-import com.beyondthecode.database.DatabasePost;
 import com.beyondthecode.entities.Post;
 import com.beyondthecode.entities.User;
 import com.beyondthecode.enums.Message;
@@ -71,7 +70,7 @@ public class Main{
       boolean validar = true;
       while(validar == true){
         System.out.println("- MENU -");
-        System.out.println("1 - Meus Posts");
+        System.out.println("1 - Posts");
         System.out.println("2 - Encontrar Amigos");
         System.out.println("3 - Ambiente de aprendizagem");
         System.out.println("4 - Lobby da Gameplay");
@@ -99,20 +98,26 @@ public class Main{
       System.out.println("Menu - Post");
       System.out.println("1 - Adicionar Post");
       System.out.println("2 - Alterar Post");
-      System.out.println("2 - Excluir Post");
+      System.out.println("3 - Excluir Post");
+      System.out.println("4 - Visualizar Post");
       System.out.println("9 - Voltar");
 
       int menu = sc.nextInt();
       switch (menu) {
         case 1:
           AddPost();
-          System.out.println(DatabasePost.postArrayList);
           break;
         case 2:
           System.out.println(Message.POST_CHANGE);
           break;
         case 3:
+          System.out.println("Digite o ID do post que deseja deletar: ");
+          int idToDelete = sc.nextInt();
+          deletePost(idToDelete);
           System.out.println(Message.POST_EXCLUIR);
+          break;
+        case 4:
+          printPost();
           break;
         default:
           validar = false;
@@ -126,9 +131,37 @@ public class Main{
     System.out.println("Digite o conteúdo do Post");
     String content = sc.nextLine();
 
-    DatabasePost.postArrayList.add(new Post(title, content));
+    DatabaseMemo.postArrayList.add(new Post(title, content));
+  }
+
+  public static void deletePost(int idToDelete) {
+    for(int i = 0; i < DatabaseMemo.postArrayList.size(); i++) {
+      Post post = DatabaseMemo.postArrayList.get(i);
+      if(post.getId().equals(idToDelete)) {
+        DatabaseMemo.postArrayList.remove(post);
+      }
+    }
+  }
+
+
+  public static void printPost(){
+    for(int i = 0; i < DatabaseMemo.postArrayList.size(); i++) {
+      Post post = DatabaseMemo.postArrayList.get(i);
+      System.out.println("-----------------------------------------------");
+      System.out.println(" ");
+
+      System.out.println(post.getTitle());
+      System.out.println(post.getContents());
+      System.out.println("ID do post: " + post.getId());
+
+      System.out.println(" ");
+      System.out.println("-----------------------------------------------");
+
+    }
   }
 }
+
+
 
 // Requisitos mínimos de entrega
 //
