@@ -2,12 +2,14 @@ import com.beyondthecode.database.DatabaseMemo;
 import com.beyondthecode.entities.Post;
 import com.beyondthecode.entities.User;
 import com.beyondthecode.enums.Message;
+import com.beyondthecode.interfaces.DeletePost;
+import com.beyondthecode.interfaces.EditPost;
 import com.beyondthecode.state.GeneralState;
 
 import java.util.Optional;
 import java.util.Scanner;
 
-public class Main{
+public class Main implements EditPost, DeletePost {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     int menu;
