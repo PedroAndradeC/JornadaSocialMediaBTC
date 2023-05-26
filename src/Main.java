@@ -53,7 +53,9 @@ public class Main{
           AddPost();
           break;
         case 2:
-          System.out.println(Message.POST_CHANGE);
+          System.out.println("Digite o ID do post que deseja editar: ");
+          int idToEdit = sc.nextInt();
+          editPost(idToEdit);
           break;
         case 3:
           System.out.println("Digite o ID do post que deseja deletar: ");
@@ -148,8 +150,11 @@ public class Main{
     System.out.println("Digite o conteúdo do Post");
     String content = sc.nextLine();
 
-    DatabaseMemo.postArrayList.add(new Post(title, content, GeneralState.loggedUser));
-    System.out.println(Message.POST_SUCCESS);
+    if (DatabaseMemo.postArrayList.add(new Post(title, content, GeneralState.loggedUser))) {
+      System.out.println(Message.POST_SUCCESS);
+    } else {
+      System.out.println(Message.POST_FAIL);
+    }
   }
 
   public static void deletePost(int idToDelete) {
@@ -162,6 +167,26 @@ public class Main{
         System.out.println(Message.POST_EXCLUIR_FAILED);
       }
     }
+  }
+
+  public static void editPost(int idToEdit) {
+    Scanner sc = new Scanner(System.in);
+    for (int i = 0; i < DatabaseMemo.postArrayList.size(); i++) {
+      Post post = DatabaseMemo.postArrayList.get(i);
+      if (post.getId().equals(idToEdit) && post.getUser().equals(GeneralState.loggedUser)) {
+        System.out.println("Novo título do post: ");
+        String newTitle = sc.nextLine();
+        System.out.println("Novo conteúdo do post: ");
+        String newContent = sc.nextLine();
+
+        post.setTitle(newTitle);
+        post.setContents(newContent);
+
+        System.out.println(Message.POST_EDIT_SUCCESS);
+        return;
+      }
+    }
+    System.out.println(Message.POST_EDIT_FAILED);
   }
 
   public static void printPost(){
