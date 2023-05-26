@@ -149,6 +149,7 @@ public class Main{
     String content = sc.nextLine();
 
     DatabaseMemo.postArrayList.add(new Post(title, content, GeneralState.loggedUser));
+    System.out.println(Message.POST_SUCCESS);
   }
 
   public static void deletePost(int idToDelete) {
