@@ -12,19 +12,14 @@ public class Post {
     private Integer id;
 //    private List<Comment> comments;
 
-    public Post(String title, String contents){
-        super();
-        this.title = title;
-        this.contents = contents;
-        this.id = ++Post.idIncrement;
-    }
 
     public Post(String title, String contents, User user) {
         super();
         this.title = title;
         this.contents = contents;
         this.user = user;
-//        this.comments = new ArrayList<>();
+        this.id = ++Post.idIncrement;
+//      this.comments = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -39,9 +34,10 @@ public class Post {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public User getUser() {
+        return this.user;
     }
+
 
     public void setTitle(String title) {
         this.contents = title;
@@ -51,9 +47,7 @@ public class Post {
         this.contents = contents;
     }
 
-    public User getUser() {
-        return user;
-    }
+
 
     @Override
     public String toString() {

@@ -2,6 +2,7 @@ import com.beyondthecode.database.DatabaseMemo;
 import com.beyondthecode.entities.Post;
 import com.beyondthecode.entities.User;
 import com.beyondthecode.enums.Message;
+import com.beyondthecode.state.GeneralState;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -32,6 +33,45 @@ public class Main{
       }
     }
   }
+
+
+  public static void Post() {
+    Scanner sc = new Scanner(System.in);
+    boolean validar = true;
+    while(validar == true){
+      System.out.println("Logado com: " + GeneralState.loggedUser.getName());
+      System.out.println("Menu - Post");
+      System.out.println("1 - Adicionar Post");
+      System.out.println("2 - Alterar Post");
+      System.out.println("3 - Excluir Post");
+      System.out.println("4 - Visualizar Post");
+      System.out.println("9 - Voltar");
+
+      int menu = sc.nextInt();
+      switch (menu) {
+        case 1:
+          AddPost();
+          break;
+        case 2:
+          System.out.println(Message.POST_CHANGE);
+          break;
+        case 3:
+          System.out.println("Digite o ID do post que deseja deletar: ");
+          int idToDelete = sc.nextInt();
+          deletePost(idToDelete);
+          break;
+        case 4:
+          printPost();
+          break;
+        default:
+          validar = false;
+      }
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // ---------------------------- *  USER METODS * ----------------------------
+  // --------------------------------------------------------------------------
 
   public static void createUser() {
     Scanner sc = new Scanner(System.in);
@@ -65,11 +105,13 @@ public class Main{
 
     if(filteredUser.isPresent()) {
       System.out.println(Message.LOGIN_SUCCESS);
+      GeneralState.loggedUser = filteredUser.get();
       //Local de continuar código
       //Segundo Menu
       boolean validar = true;
       while(validar == true){
-        System.out.println("- MENU -");
+        System.out.println("Logado com: " + GeneralState.loggedUser.getName());
+        System.out.println("---- MENU ----");
         System.out.println("1 - Posts");
         System.out.println("2 - Encontrar Amigos");
         System.out.println("3 - Ambiente de aprendizagem");
@@ -83,47 +125,22 @@ public class Main{
             break;
           case 2:
             break;
-          default:
+          case 9:
             validar = false;
+            GeneralState.loggedUser = null;
         }
       }
     } else {
       System.out.println(Message.LOGIN_FAIL);
     }
   }
-  public static void Post() {
-    Scanner sc = new Scanner(System.in);
-    boolean validar = true;
-    while(validar == true){
-      System.out.println("Menu - Post");
-      System.out.println("1 - Adicionar Post");
-      System.out.println("2 - Alterar Post");
-      System.out.println("3 - Excluir Post");
-      System.out.println("4 - Visualizar Post");
-      System.out.println("9 - Voltar");
 
-      int menu = sc.nextInt();
-      switch (menu) {
-        case 1:
-          AddPost();
-          break;
-        case 2:
-          System.out.println(Message.POST_CHANGE);
-          break;
-        case 3:
-          System.out.println("Digite o ID do post que deseja deletar: ");
-          int idToDelete = sc.nextInt();
-          deletePost(idToDelete);
-          System.out.println(Message.POST_EXCLUIR);
-          break;
-        case 4:
-          printPost();
-          break;
-        default:
-          validar = false;
-      }
-    }
-  }
+
+  // -------------------------------------------------------------------------
+  // ---------------------------- * POST METODS * ----------------------------
+  // -------------------------------------------------------------------------
+
+
   public static void AddPost(){
     Scanner sc = new Scanner(System.in);
     System.out.println("Digite o Titulo do Post");
@@ -131,30 +148,32 @@ public class Main{
     System.out.println("Digite o conteúdo do Post");
     String content = sc.nextLine();
 
-    DatabaseMemo.postArrayList.add(new Post(title, content));
+    DatabaseMemo.postArrayList.add(new Post(title, content, GeneralState.loggedUser));
   }
 
   public static void deletePost(int idToDelete) {
     for(int i = 0; i < DatabaseMemo.postArrayList.size(); i++) {
       Post post = DatabaseMemo.postArrayList.get(i);
-      if(post.getId().equals(idToDelete)) {
+      if(post.getId().equals(idToDelete) && post.getUser().equals(GeneralState.loggedUser)) {
         DatabaseMemo.postArrayList.remove(post);
+        System.out.println(Message.POST_EXCLUIR);
+      } else if(!post.getUser().equals(GeneralState.loggedUser) && post.getId().equals(idToDelete)) {
+        System.out.println(Message.POST_EXCLUIR_FAILED);
       }
     }
   }
-
 
   public static void printPost(){
     for(int i = 0; i < DatabaseMemo.postArrayList.size(); i++) {
       Post post = DatabaseMemo.postArrayList.get(i);
       System.out.println("-----------------------------------------------");
-      System.out.println(" ");
 
       System.out.println(post.getTitle());
       System.out.println(post.getContents());
+      System.out.println(" ");
+      System.out.println("Postado por: " + post.getUser().getName());
       System.out.println("ID do post: " + post.getId());
 
-      System.out.println(" ");
       System.out.println("-----------------------------------------------");
 
     }

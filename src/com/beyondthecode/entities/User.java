@@ -4,22 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+    private static Integer idIncrement = 0;
+
+    private Integer id;
 
     private String email;
     private String password;
     private String name;
 
-    private List<Post> posts;
-
-    public User (String title, String content) {
-        super();
-    }
     public User (String email, String password, String name) {
-        super();
         this.email = email;
         this.password = password;
         this.name = name;
-        this.posts = new ArrayList<>();
+        this.id = ++User.idIncrement;
     }
 
     public String getEmail() {
@@ -32,6 +29,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public void setPassword(String password) {

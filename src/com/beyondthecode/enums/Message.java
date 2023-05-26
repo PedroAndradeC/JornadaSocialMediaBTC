@@ -9,7 +9,8 @@ public enum Message {
   POST_SUCCESS("Post adicionado com sucesso"),
   POST_FAIL("Erro ao realizar operação"),
   POST_CHANGE("Post alterado com sucesso"),
-  POST_EXCLUIR("Post excluido com sucesso");
+  POST_EXCLUIR("Post excluido com sucesso"),
+  POST_EXCLUIR_FAILED("Post não pertence a essa conta!");
 
   private final String message;
 
