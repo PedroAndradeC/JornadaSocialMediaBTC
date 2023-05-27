@@ -12,6 +12,10 @@ public class Comment {
         this.text = text;
     }
 
+    public Comment() {
+
+    }
+
     public Integer getId() {
         return id;
     }

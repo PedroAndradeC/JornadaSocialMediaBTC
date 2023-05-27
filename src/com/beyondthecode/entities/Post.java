@@ -5,13 +5,11 @@ import java.util.List;
 
 public class Post {
     private static Integer idIncrement = 0;
-
     private String contents;
     private String title;
     private User user;
     private Integer id;
 //    private List<Comment> comments;
-
 
     public Post(String title, String contents, User user) {
         super();
@@ -38,7 +36,6 @@ public class Post {
         return this.user;
     }
 
-
     public void setTitle(String title) {
         this.contents = title;
     }
@@ -47,14 +44,10 @@ public class Post {
         this.contents = contents;
     }
 
-
-
     @Override
     public String toString() {
         return "Titulo: " + title + " Conteudo: " + contents + " ID: " + id;
     }
-
-
 
 //    public List<Comment> getComments() {
 //        return comments;
@@ -64,6 +57,4 @@ public class Post {
 //    public void addComment(Integer id, User user, String text){
 //        comments.add(new Comment(id, user, text));
 //    }
-
-
 }

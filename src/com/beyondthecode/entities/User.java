@@ -3,16 +3,21 @@ package com.beyondthecode.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User extends Comment{
     private static Integer idIncrement = 0;
 
     private Integer id;
-
     private String email;
     private String password;
     private String name;
 
+    public User () {
+        super();
+        this.name = name;
+    }
+
     public User (String email, String password, String name) {
+        super();
         this.email = email;
         this.password = password;
         this.name = name;

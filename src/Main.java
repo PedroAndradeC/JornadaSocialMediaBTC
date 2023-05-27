@@ -15,7 +15,13 @@ public class Main implements EditPost, DeletePost {
     int menu;
     boolean validar = true;
     while (validar == true) {
-      System.out.println("Bem vindo ao BTC");
+      System.out.println("----------------------// Bem vindo ao BTC //----------------------");
+      System.out.println("..............▮▮▮▮▮....▮▮▮▮▮▮....▮▮▮▮▮..............");
+      System.out.println("..............▮      ▮.......▮▮.......▮       ▮..............");
+      System.out.println("..............▮▮▮▮▮.......▮▮.......▮         ..............");
+      System.out.println("..............▮      ▮......▮▮........▮       ▮..............");
+      System.out.println("..............▮▮▮▮▮......▮▮.........▮▮▮▮▮...............");
+      System.out.println("-------------------------------------------------------------------");
       System.out.println("1 - Login");
       System.out.println("2 - Cadastro");
       System.out.println("3 - Finalizar");
@@ -212,10 +218,10 @@ public class Main implements EditPost, DeletePost {
 
 // Requisitos mínimos de entrega
 //
-// mínimo uma classe abstrata
-// 2 interfaces
-// 1 enum
+// mínimo uma classe abstrata ✅
+// 2 interfaces ✅
+// 1 enum ✅
 // 3 collections (3 do mesmo tipo ou mescladas)
-// deve possuir herança e polimorfismo
-// todos os atributos devem ser encapsulados (a menos que haja alguma exceção)
-// deve ter ao menos 3 CRUD (em listas)
+// deve possuir herança e polimorfismo ✅
+// todos os atributos devem ser encapsulados (a menos que haja alguma exceção) ✅
+// deve ter ao menos 3 CRUD (em listas) ✅
