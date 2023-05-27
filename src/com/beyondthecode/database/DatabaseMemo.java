@@ -1,7 +1,7 @@
 package com.beyondthecode.database;
 
-import com.beyondthecode.entities.Post;
-import com.beyondthecode.entities.User;
+import com.beyondthecode.entity.Post;
+import com.beyondthecode.entity.User;
 
 import java.util.ArrayList;
 
