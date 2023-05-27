@@ -1,3 +1,4 @@
+//<<<<<<< Updated upstream
 import com.beyondthecode.database.DatabaseMemo;
 import com.beyondthecode.entities.Post;
 import com.beyondthecode.entities.User;
@@ -14,14 +15,16 @@ public class Main implements EditPost, DeletePost {
     Scanner sc = new Scanner(System.in);
     int menu;
     boolean validar = true;
+
+    System.out.println("----------------------// Bem vindo ao BTC //----------------------");
+    System.out.println("..............▮▮▮▮▮...▮▮▮▮▮▮▮..▮▮▮▮▮▮..............");
+    System.out.println("..............▮      ▮......▮▮..... ▮          ..............");
+    System.out.println("..............▮▮▮▮▮.......▮▮.....▮           ..............");
+    System.out.println("..............▮      ▮......▮▮......▮          ..............");
+    System.out.println("..............▮▮▮▮▮.......▮▮.......▮▮▮▮▮▮...............");
+    System.out.println("-------------------------------------------------------------------");
+
     while (validar == true) {
-      System.out.println("----------------------// Bem vindo ao BTC //----------------------");
-      System.out.println("..............▮▮▮▮▮....▮▮▮▮▮▮....▮▮▮▮▮..............");
-      System.out.println("..............▮      ▮.......▮▮.......▮       ▮..............");
-      System.out.println("..............▮▮▮▮▮.......▮▮.......▮         ..............");
-      System.out.println("..............▮      ▮......▮▮........▮       ▮..............");
-      System.out.println("..............▮▮▮▮▮......▮▮.........▮▮▮▮▮...............");
-      System.out.println("-------------------------------------------------------------------");
       System.out.println("1 - Login");
       System.out.println("2 - Cadastro");
       System.out.println("3 - Finalizar");
@@ -96,9 +99,13 @@ public class Main implements EditPost, DeletePost {
     Optional<User> filteredEmail = DatabaseMemo.userArrayList.stream().filter(user -> user.getEmail().equals(email)).findFirst();
     if(filteredEmail.isEmpty()) {
       DatabaseMemo.userArrayList.add(new User(email, password, name));
+      System.out.println("-------------------------------------");
       System.out.println(Message.REGISTER_SUCCESS);
+      System.out.println("-------------------------------------");
     } else {
+      System.out.println("-------------------------------------");
       System.out.println(Message.REGISTER_FAIL);
+      System.out.println("-------------------------------------");
     }
   }
 
@@ -114,7 +121,9 @@ public class Main implements EditPost, DeletePost {
             && user.getPassword().equals(password)).findFirst();
 
     if(filteredUser.isPresent()) {
+      System.out.println("-------------------------------------");
       System.out.println(Message.LOGIN_SUCCESS);
+      System.out.println("-------------------------------------");
       GeneralState.loggedUser = filteredUser.get();
       //Local de continuar código
       //Segundo Menu
@@ -123,9 +132,7 @@ public class Main implements EditPost, DeletePost {
         System.out.println("Logado com: " + GeneralState.loggedUser.getName());
         System.out.println("---- MENU ----");
         System.out.println("1 - Posts");
-        System.out.println("2 - Encontrar Amigos");
-        System.out.println("3 - Ambiente de aprendizagem");
-        System.out.println("4 - Lobby da Gameplay");
+        System.out.println("2 - Encontrar Amigos (Ainda não implementado)");
         System.out.println("9 - LOGOUT");
 
         int menu = sc.nextInt();
@@ -141,7 +148,9 @@ public class Main implements EditPost, DeletePost {
         }
       }
     } else {
+      System.out.println("-------------------------------------");
       System.out.println(Message.LOGIN_FAIL);
+      System.out.println("-------------------------------------");
     }
   }
 
@@ -159,9 +168,13 @@ public class Main implements EditPost, DeletePost {
     String content = sc.nextLine();
 
     if (DatabaseMemo.postArrayList.add(new Post(title, content, GeneralState.loggedUser))) {
+      System.out.println("-------------------------------------");
       System.out.println(Message.POST_SUCCESS);
+      System.out.println("-------------------------------------");
     } else {
+      System.out.println("-------------------------------------");
       System.out.println(Message.POST_FAIL);
+      System.out.println("-------------------------------------");
     }
   }
 
@@ -170,9 +183,13 @@ public class Main implements EditPost, DeletePost {
       Post post = DatabaseMemo.postArrayList.get(i);
       if(post.getId().equals(idToDelete) && post.getUser().equals(GeneralState.loggedUser)) {
         DatabaseMemo.postArrayList.remove(post);
+        System.out.println("-------------------------------------");
         System.out.println(Message.POST_EXCLUIR);
+        System.out.println("-------------------------------------");
       } else if(!post.getUser().equals(GeneralState.loggedUser) && post.getId().equals(idToDelete)) {
+        System.out.println("-------------------------------------");
         System.out.println(Message.POST_EXCLUIR_FAILED);
+        System.out.println("-------------------------------------");
       }
     }
   }
@@ -189,12 +206,14 @@ public class Main implements EditPost, DeletePost {
 
         post.setTitle(newTitle);
         post.setContents(newContent);
-
+        System.out.println("-------------------------------------");
         System.out.println(Message.POST_EDIT_SUCCESS);
-        return;
+        System.out.println("-------------------------------------");
       }
     }
+    System.out.println("-------------------------------------");
     System.out.println(Message.POST_EDIT_FAILED);
+    System.out.println("-------------------------------------");
   }
 
   public static void printPost(){
@@ -225,3 +244,5 @@ public class Main implements EditPost, DeletePost {
 // deve possuir herança e polimorfismo ✅
 // todos os atributos devem ser encapsulados (a menos que haja alguma exceção) ✅
 // deve ter ao menos 3 CRUD (em listas) ✅
+//=======
+//>>>>>>> Stashed changes
