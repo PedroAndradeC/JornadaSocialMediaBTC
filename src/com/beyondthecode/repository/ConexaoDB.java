@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 public class ConexãoDB {
     public static Connection getConnection() {
+
         private static final String SERVER = "localhost";
         private static final String PORT = "1521"; // Porta TCP padrão do Oracle
         private static final String DATABASE = "xe";
