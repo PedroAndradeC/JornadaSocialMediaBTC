@@ -6,12 +6,14 @@ import com.beyondthecode.entity.enums.Message;
 import com.beyondthecode.entity.interfaces.DeletePost;
 import com.beyondthecode.entity.interfaces.EditPost;
 import com.beyondthecode.entity.state.GeneralState;
+import com.beyondthecode.service.UsuarioService;
 
 import java.util.Optional;
 import java.util.Scanner;
 
 public class Main implements EditPost, DeletePost {
-  public static void main(String[] args) {
+  private static UsuarioService usuarioservice = new UsuarioService();
+  public static void main(String[] args) throws Exception {
     Scanner sc = new Scanner(System.in);
     int menu;
     boolean validar = true;
@@ -37,7 +39,6 @@ public class Main implements EditPost, DeletePost {
 
         case 2:
           createUser();
-          System.out.println(DatabaseMemo.userArrayList);
           break;
         default:
           validar = false;
@@ -86,53 +87,39 @@ public class Main implements EditPost, DeletePost {
   // ---------------------------- *  USER METODS * ----------------------------
   // --------------------------------------------------------------------------
 
-  public static void createUser() {
+  public static void createUser() throws Exception {
     Scanner sc = new Scanner(System.in);
+    User user = new User();
 
     System.out.println("E-mail");
-    String email = sc.nextLine();
+    user.setEmail(sc.nextLine());
     System.out.println("Password");
-    String password = sc.nextLine();
+    user.setPassword(sc.nextLine());
     System.out.println("Nome Completo");
-    String name = sc.nextLine();
+    user.setName(sc.nextLine());
 
-    Optional<User> filteredEmail = DatabaseMemo.userArrayList.stream().filter(user -> user.getEmail().equals(email)).findFirst();
-    if(filteredEmail.isEmpty()) {
-      DatabaseMemo.userArrayList.add(new User(email, password, name));
-      System.out.println("-------------------------------------");
-      System.out.println(Message.REGISTER_SUCCESS);
-      System.out.println("-------------------------------------");
-    } else {
-      System.out.println("-------------------------------------");
-      System.out.println(Message.REGISTER_FAIL);
-      System.out.println("-------------------------------------");
-    }
+    User usuarioSalvo = usuarioservice.salvarUserDB(user);
   }
 
-  public static void Login() {
+  public static void Login() throws Exception {
     Scanner sc = new Scanner(System.in);
 
-    System.out.println("E-mail");
+    System.out.print("E-mail: ");
     String email = sc.nextLine();
-    System.out.println("Password");
-    String password = sc.nextLine();
+    System.out.print("Senha: ");
+    String senha = sc.nextLine();
 
-    Optional<User> filteredUser = DatabaseMemo.userArrayList.stream().filter(user -> user.getEmail().equals(email)
-            && user.getPassword().equals(password)).findFirst();
-
-    if(filteredUser.isPresent()) {
-      System.out.println("-------------------------------------");
-      System.out.println(Message.LOGIN_SUCCESS);
-      System.out.println("-------------------------------------");
-      GeneralState.loggedUser = filteredUser.get();
-      //Local de continuar código
-      //Segundo Menu
+    // Verificar a autenticação no banco de dados
+    User user = UsuarioService.autenticarUsuario(email, senha);
+    if (user != null) {
+      System.out.println("Login bem-sucedido! Bem-vindo, " + user.getName() + "!");
       boolean validar = true;
       while(validar == true){
         System.out.println("Logado com: " + GeneralState.loggedUser.getName());
         System.out.println("---- MENU ----");
         System.out.println("1 - Posts");
-        System.out.println("2 - Encontrar Amigos (Ainda não implementado)");
+        System.out.println("2 - Editar Conta");
+        System.out.println("3 - Excluir Conta");
         System.out.println("9 - LOGOUT");
 
         int menu = sc.nextInt();
@@ -141,6 +128,7 @@ public class Main implements EditPost, DeletePost {
             Post();
             break;
           case 2:
+            EditUser();
             break;
           case 9:
             validar = false;
@@ -148,17 +136,17 @@ public class Main implements EditPost, DeletePost {
         }
       }
     } else {
-      System.out.println("-------------------------------------");
-      System.out.println(Message.LOGIN_FAIL);
-      System.out.println("-------------------------------------");
+      System.out.println("E-mail ou senha inválidos. Tente novamente.");
     }
   }
 
-
+  public static void EditUser() throws Exception {
+    Scanner sc = new Scanner(System.in);
+    User user = new User();
+  }
   // -------------------------------------------------------------------------
   // ---------------------------- * POST METODS * ----------------------------
   // -------------------------------------------------------------------------
-
 
   public static void AddPost(){
     Scanner sc = new Scanner(System.in);
