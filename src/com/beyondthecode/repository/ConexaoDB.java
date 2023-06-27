@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConexãoDB {
-    public static Connection getConnection() {
-
+public class ConexaoDB {
         private static final String SERVER = "localhost";
         private static final String PORT = "1521"; // Porta TCP padrão do Oracle
         private static final String DATABASE = "xe";
@@ -24,5 +22,4 @@ public class ConexãoDB {
 
             return connection;
         }
-    }
 }
