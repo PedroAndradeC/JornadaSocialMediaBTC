@@ -1,11 +1,9 @@
 package com.beyondthecode.view;//<<<<<<< Updated upstream
-import com.beyondthecode.database.DatabaseMemo;
 import com.beyondthecode.entity.Post;
 import com.beyondthecode.entity.User;
 import com.beyondthecode.entity.enums.Message;
 import com.beyondthecode.entity.interfaces.DeletePost;
 import com.beyondthecode.entity.interfaces.EditPost;
-import com.beyondthecode.entity.state.GeneralState;
 import com.beyondthecode.service.UsuarioService;
 
 import java.util.Optional;
@@ -51,7 +49,6 @@ public class Main implements EditPost, DeletePost {
     Scanner sc = new Scanner(System.in);
     boolean validar = true;
     while(validar == true){
-      System.out.println("Logado com: " + GeneralState.loggedUser.getName());
       System.out.println("Menu - Post");
       System.out.println("1 - Adicionar Post");
       System.out.println("2 - Alterar Post");
@@ -112,10 +109,12 @@ public class Main implements EditPost, DeletePost {
     // Verificar a autenticação no banco de dados
     User user = UsuarioService.autenticarUsuario(email, senha);
     if (user != null) {
+      UsuarioService usuarioService = new UsuarioService();
       System.out.println("Login bem-sucedido! Bem-vindo, " + user.getName() + "!");
+      // Definir usuário como logado
+      usuarioService.setUsuarioLogado(user);
       boolean validar = true;
       while(validar == true){
-        System.out.println("Logado com: " + GeneralState.loggedUser.getName());
         System.out.println("---- MENU ----");
         System.out.println("1 - Posts");
         System.out.println("2 - Editar Conta");
@@ -130,9 +129,11 @@ public class Main implements EditPost, DeletePost {
           case 2:
             EditUser();
             break;
+          case 3:
+            ExcluirUser();
+            break;
           case 9:
             validar = false;
-            GeneralState.loggedUser = null;
         }
       }
     } else {
@@ -141,8 +142,76 @@ public class Main implements EditPost, DeletePost {
   }
 
   public static void EditUser() throws Exception {
+    UsuarioService usuarioService = new UsuarioService();
+    if (usuarioService.setUsuarioLogado()) {
+      User user = usuarioService.getUsuarioLogado();
+      Scanner sc = new Scanner(System.in);
+
+      System.out.println("Editar Usuário:");
+      System.out.println("1 - Editar Nome");
+      System.out.println("2 - Editar Senha");
+      System.out.println("3 - Editar E-mail");
+      System.out.println("9 - Voltar");
+
+      int menu = sc.nextInt();
+
+      switch (menu) {
+        case 1:
+          System.out.print("Novo nome: ");
+          sc.nextLine();
+          String newName = sc.nextLine();
+          user.setName(newName);
+          usuarioService.editar(user); // Atualiza o usuário no banco de dados
+          System.out.println("Nome atualizado com sucesso!");
+          break;
+
+        case 2:
+          System.out.print("Nova senha: ");
+          sc.nextLine();
+          String newPassword = sc.nextLine();
+          user.setPassword(newPassword);
+          usuarioService.editar(user); // Atualiza o usuário no banco de dados
+          System.out.println("Senha atualizada com sucesso!");
+          break;
+
+        case 3:
+          System.out.print("Novo e-mail: ");
+          sc.nextLine();
+          String newEmail = sc.nextLine();
+          user.setEmail(newEmail);
+          usuarioService.editar(user); // Atualiza o usuário no banco de dados
+          System.out.println("E-mail atualizado com sucesso!");
+          break;
+
+        case 9:
+          // Voltar
+          break;
+
+        default:
+          System.out.println("Opção inválida!");
+      }
+    } else {
+      System.out.println("Nenhum usuário logado. Faça login antes de editar.");
+    }
+  }
+  public static void ExcluirUser() throws Exception {
     Scanner sc = new Scanner(System.in);
     User user = new User();
+    boolean validar = true;
+    while(validar == true){
+      System.out.println("Para excluir seu usuario aperte 1 e digite a sua senha, para Voltar aperte 2");
+      System.out.println("1 - Excluir Conta");
+      System.out.println("2 - Voltar");
+
+      int menu = sc.nextInt();
+      switch (menu) {
+        case 1:
+
+          break;
+        case 2:
+          validar = false;
+      }
+    }
   }
   // -------------------------------------------------------------------------
   // ---------------------------- * POST METODS * ----------------------------
@@ -155,19 +224,10 @@ public class Main implements EditPost, DeletePost {
     System.out.println("Digite o conteúdo do Post");
     String content = sc.nextLine();
 
-    if (DatabaseMemo.postArrayList.add(new Post(title, content, GeneralState.loggedUser))) {
-      System.out.println("-------------------------------------");
-      System.out.println(Message.POST_SUCCESS);
-      System.out.println("-------------------------------------");
-    } else {
-      System.out.println("-------------------------------------");
-      System.out.println(Message.POST_FAIL);
-      System.out.println("-------------------------------------");
-    }
   }
 
   public static void deletePost(int idToDelete) {
-    for(int i = 0; i < DatabaseMemo.postArrayList.size(); i++) {
+   /* for(int i = 0; i < DatabaseMemo.postArrayList.size(); i++) {
       Post post = DatabaseMemo.postArrayList.get(i);
       if(post.getId().equals(idToDelete) && post.getUser().equals(GeneralState.loggedUser)) {
         DatabaseMemo.postArrayList.remove(post);
@@ -179,45 +239,28 @@ public class Main implements EditPost, DeletePost {
         System.out.println(Message.POST_EXCLUIR_FAILED);
         System.out.println("-------------------------------------");
       }
-    }
+    }*/
   }
 
   public static void editPost(int idToEdit) {
     Scanner sc = new Scanner(System.in);
-    for (int i = 0; i < DatabaseMemo.postArrayList.size(); i++) {
-      Post post = DatabaseMemo.postArrayList.get(i);
-      if (post.getId().equals(idToEdit) && post.getUser().equals(GeneralState.loggedUser)) {
-        System.out.println("Novo título do post: ");
-        String newTitle = sc.nextLine();
-        System.out.println("Novo conteúdo do post: ");
-        String newContent = sc.nextLine();
-
-        post.setTitle(newTitle);
-        post.setContents(newContent);
-        System.out.println("-------------------------------------");
-        System.out.println(Message.POST_EDIT_SUCCESS);
-        System.out.println("-------------------------------------");
-      }
-    }
     System.out.println("-------------------------------------");
     System.out.println(Message.POST_EDIT_FAILED);
     System.out.println("-------------------------------------");
   }
 
   public static void printPost(){
-    for(int i = 0; i < DatabaseMemo.postArrayList.size(); i++) {
-      Post post = DatabaseMemo.postArrayList.get(i);
-      System.out.println("-----------------------------------------------");
+      /*System.out.println("-----------------------------------------------");
 
-      System.out.println(post.getTitle());
-      System.out.println(post.getContents());
+      System.out.println();
+      System.out.println();
       System.out.println(" ");
       System.out.println("Postado por: " + post.getUser().getName());
       System.out.println("ID do post: " + post.getId());
 
       System.out.println("-----------------------------------------------");
 
-    }
+    */
   }
 }
 

@@ -24,8 +24,8 @@ public class UsuarioService {
         return listar;
     }
     //Editar
-    public boolean editar(User cliente) throws Exception {
-        return userRepository.editar(cliente);
+    public boolean editar(User user) throws Exception {
+        return userRepository.editar(user);
     }
     //Excluir
     public boolean excluir(Integer id){
@@ -40,6 +40,15 @@ public class UsuarioService {
             return user;
         }
         return null;
+    }
+    // Verificar se usuário está logado
+    public boolean isUsuarioLogado() {
+        return userRepository.isUsuarioLogado();
+    }
+
+    // Obter usuário logado
+    public User getUsuarioLogado() {
+        return userRepository.getUsuarioLogado();
     }
 
 }

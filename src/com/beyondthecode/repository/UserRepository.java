@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository {
-
+    private User usuarioLogado;
     public User salvarUserDB(User user) {
         Connection connection = null;
         try {
@@ -82,39 +82,44 @@ public class UserRepository {
 
         return listaUsuarios;
     }
-    //Editar
     public boolean editar(User user) {
+        UserRepository userRepository = new UserRepository();
         Connection connection = null;
         try {
             // abrir conexao
             connection = ConexaoDB.getConnection();
 
+            int idUsuario = 0;
+            if (userRepository.isUsuarioLogado()) {
+                User usuarioLogado = userRepository.getUsuarioLogado();
+                idUsuario = usuarioLogado.getId();
+            }
             // update
-            String sql = "update usuario set " +
-                    " nome = ?, " +
-                    " email = ?," +
-                    " senha = ? " +
-                    " where id_user = ? ";
+            String sql = "UPDATE usuario SET " +
+                    "nome = ?, " +
+                    "email = ?, " +
+                    "senha = ? " +
+                    "WHERE id_user = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getEmail());
             preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setInt(4, user.getId());
+            preparedStatement.setInt(4, idUsuario);
 
             //executar
             int resultado = preparedStatement.executeUpdate();
             return resultado > 0;
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
             // fechar conexao
             try {
-                if(connection != null && !connection.isClosed()){
+                if (connection != null && !connection.isClosed()) {
                     connection.close();
                 }
-            } catch (SQLException ex){
+            } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
@@ -193,5 +198,12 @@ public class UserRepository {
         }
 
         return null; // Retorna null se nenhum usuário for encontrado
+    }
+    public User getUsuarioLogado() {
+        return usuarioLogado;
+    }
+
+    public boolean isUsuarioLogado() {
+        return usuarioLogado != null;
     }
 }
