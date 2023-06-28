@@ -1,22 +1,20 @@
 package com.beyondthecode.entity;
 
 public class Post {
-    private static Integer idIncrement = 0;
     private String contents;
     private String title;
-    private User user;
     private Integer id;
-//    private List<Comment> comments;
 
-    public Post(String title, String contents, User user) {
+    public Post( ) {
+        super();
+        this.title = title;
+    }
+
+    public Post (String title, String contents) {
         super();
         this.title = title;
         this.contents = contents;
-        this.user = user;
-        this.id = ++Post.idIncrement;
-//      this.comments = new ArrayList<>();
     }
-
     public String getTitle() {
         return title;
     }
@@ -29,16 +27,16 @@ public class Post {
         return id;
     }
 
-    public User getUser() {
-        return this.user;
-    }
-
     public void setTitle(String title) {
-        this.contents = title;
+        this.title = title;
     }
 
     public void setContents(String contents) {
         this.contents = contents;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override
@@ -46,12 +44,4 @@ public class Post {
         return "Titulo: " + title + " Conteudo: " + contents + " ID: " + id;
     }
 
-//    public List<Comment> getComments() {
-//        return comments;
-//    }
-//
-//
-//    public void addComment(Integer id, User user, String text){
-//        comments.add(new Comment(id, user, text));
-//    }
 }

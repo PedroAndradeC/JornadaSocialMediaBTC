@@ -1,8 +1,10 @@
 package com.beyondthecode.view;//<<<<<<< Updated upstream
+import com.beyondthecode.entity.Post;
 import com.beyondthecode.entity.User;
 import com.beyondthecode.entity.enums.Message;
 import com.beyondthecode.entity.interfaces.DeletePost;
 import com.beyondthecode.entity.interfaces.EditPost;
+import com.beyondthecode.service.PostService;
 import com.beyondthecode.service.UserService;
 
 import java.util.Scanner;
@@ -10,6 +12,7 @@ import java.util.Scanner;
 public class Main implements EditPost, DeletePost {
   public static int idLog;
   private static UserService usuarioservice = new UserService();
+  private static PostService postService = new PostService();
   public static void main(String[] args) throws Exception {
     Scanner sc = new Scanner(System.in);
     int menu;
@@ -44,7 +47,7 @@ public class Main implements EditPost, DeletePost {
   }
 
 
-  public static void Post() {
+  public static void Post() throws Exception {
     Scanner sc = new Scanner(System.in);
     boolean validar = true;
     while(validar == true){
@@ -226,29 +229,21 @@ public class Main implements EditPost, DeletePost {
   // ---------------------------- * POST METODS * ----------------------------
   // -------------------------------------------------------------------------
 
-  public static void AddPost(){
+  public static void AddPost() throws Exception {
+    Post post = new Post();
     Scanner sc = new Scanner(System.in);
     System.out.println("Digite o Titulo do Post");
-    String title = sc.nextLine();
+    post.setTitle(sc.nextLine());
     System.out.println("Digite o conteúdo do Post");
-    String content = sc.nextLine();
+    post.setContents(sc.nextLine());
 
+
+    System.out.println(post.getTitle());
+    System.out.println(post.getContents());
+    Post postSalvo = postService.salvarPost(post);
   }
 
   public static void deletePost(int idToDelete) {
-   /* for(int i = 0; i < DatabaseMemo.postArrayList.size(); i++) {
-      Post post = DatabaseMemo.postArrayList.get(i);
-      if(post.getId().equals(idToDelete) && post.getUser().equals(GeneralState.loggedUser)) {
-        DatabaseMemo.postArrayList.remove(post);
-        System.out.println("-------------------------------------");
-        System.out.println(Message.POST_EXCLUIR);
-        System.out.println("-------------------------------------");
-      } else if(!post.getUser().equals(GeneralState.loggedUser) && post.getId().equals(idToDelete)) {
-        System.out.println("-------------------------------------");
-        System.out.println(Message.POST_EXCLUIR_FAILED);
-        System.out.println("-------------------------------------");
-      }
-    }*/
   }
 
   public static void editPost(int idToEdit) {
