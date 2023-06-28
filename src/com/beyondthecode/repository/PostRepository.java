@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.beyondthecode.view.Main.idLog;
+import static com.beyondthecode.view.Main.idToEdit;
 
 public class PostRepository {
     public Post salvarPost(Post post) {
@@ -104,7 +105,7 @@ public class PostRepository {
                 sql = "UPDATE JORNADA.POST SET conteudo = ? WHERE id_user = ?";
 
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, post.getTitle());
+                preparedStatement.setString(1, post.getContents());
                 preparedStatement.setInt(2, idLog);
                 //executar
                 int resultado = preparedStatement.executeUpdate();
@@ -132,7 +133,7 @@ public class PostRepository {
         try {
             connection = ConexaoDB.getConnection();
 
-            String sql = "delete from post where id_user = ?";
+            String sql = "delete from post where id_post = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
@@ -152,5 +153,40 @@ public class PostRepository {
             }
         }
         return false;
+    }
+    public int buscarPostID() {
+        Connection connection = null;
+        try {
+            // Abrir conexão
+            connection = ConexaoDB.getConnection();
+
+            // Consulta SQL
+            String sql = "SELECT ID_USER FROM POST WHERE ID_POST = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, idToEdit);
+
+            // Executar consulta
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                // Extrair os dados do resultado
+                int idUsuario = resultSet.getInt("ID_USER");
+
+                return idUsuario;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            // Fechar conexão
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return 0;
     }
 }

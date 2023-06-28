@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class Main implements EditPost, DeletePost {
   public static int idLog;
+  public static int idToEdit;
   private static UserService usuarioservice = new UserService();
   private static PostService postService = new PostService();
   public static void main(String[] args) throws Exception {
@@ -65,13 +66,13 @@ public class Main implements EditPost, DeletePost {
           break;
         case 2:
           System.out.println("Digite o ID do post que deseja editar: ");
-          int idToEdit = sc.nextInt();
-          editPost(idToEdit);
+          idToEdit = sc.nextInt();
+          editPost();
           break;
         case 3:
           System.out.println("Digite o ID do post que deseja deletar: ");
-          int idToDelete = sc.nextInt();
-          deletePost(idToDelete);
+          idToEdit = sc.nextInt();
+          deletePost();
           break;
         case 4:
           printPost();
@@ -243,41 +244,78 @@ public class Main implements EditPost, DeletePost {
     Post postSalvo = postService.salvarPost(post);
   }
 
-  public static void deletePost(int idToDelete) {
+  public static void deletePost() throws Exception {
+    int idL = postService.autenticarPost();
+    System.out.println("Deletar Post: "+idToEdit);
+    if(idL == idLog){
+      Post post = new Post();
+      Scanner sc = new Scanner(System.in);
+      System.out.println("Deletar Post:");
+      System.out.println("1 - Deletar Post");
+      System.out.println("2 - Voltar");
+      int menu = sc.nextInt();
+
+      switch (menu) {
+        case 1:
+          postService.excluir(idToEdit);
+          System.out.println("Post Excluido com sucesso");
+          break;
+        case 2:
+          break;
+        default:
+          System.out.println("Opção inválida!");
+      }
+    }else{
+      System.out.println("Esse id não é de sua conta");
+    }
   }
 
-  public static void editPost(int idToEdit) {
-    Scanner sc = new Scanner(System.in);
-    System.out.println("-------------------------------------");
-    System.out.println(Message.POST_EDIT_FAILED);
-    System.out.println("-------------------------------------");
+  public static void editPost() throws Exception {
+    int idL = postService.autenticarPost();
+    System.out.println("Editar Post: "+idToEdit);
+    if(idL == idLog){
+      Post post = new Post();
+      Scanner sc = new Scanner(System.in);
+      System.out.println("Editar Post:");
+      System.out.println("1 - Editar Titulo");
+      System.out.println("2 - Editar Conteúdo");
+      System.out.println("9 - Voltar");
+      int menu = sc.nextInt();
+
+      switch (menu) {
+        case 1:
+          System.out.print("Novo Titulo: ");
+          sc.nextLine();
+          String newTitle = sc.nextLine();
+          post.setTitle(newTitle);
+          postService.editar(post); // Atualiza o Titulo no banco de dados
+          System.out.println("Titulo atualizado com sucesso!");
+          break;
+
+        case 2:
+          System.out.print("Nova Conteúdo: ");
+          sc.nextLine();
+          String newPassword = sc.nextLine();
+          post.setContents(newPassword);
+          postService.editar(post); // Atualiza o Conteúdo no banco de dados
+          System.out.println("Conteúdo atualizada com sucesso!");
+          break;
+
+        case 9:
+          // Voltar
+          break;
+
+        default:
+          System.out.println("Opção inválida!");
+    }
+    }else{
+      System.out.println("Esse id não é de sua conta");
+    }
   }
 
   public static void printPost(){
-      /*System.out.println("-----------------------------------------------");
-
-      System.out.println();
-      System.out.println();
-      System.out.println(" ");
-      System.out.println("Postado por: " + post.getUser().getName());
-      System.out.println("ID do post: " + post.getId());
-
-      System.out.println("-----------------------------------------------");
-
-    */
+      postService.listar();
   }
 }
 
 
-
-// Requisitos mínimos de entrega
-//
-// mínimo uma classe abstrata ✅
-// 2 interfaces ✅
-// 1 enum ✅
-// 3 collections (3 do mesmo tipo ou mescladas)
-// deve possuir herança e polimorfismo ✅
-// todos os atributos devem ser encapsulados (a menos que haja alguma exceção) ✅
-// deve ter ao menos 3 CRUD (em listas) ✅
-//=======
-//>>>>>>> Stashed changes

@@ -5,6 +5,8 @@ import com.beyondthecode.repository.PostRepository;
 
 import java.util.List;
 
+import static com.beyondthecode.view.Main.idToEdit;
+
 public class PostService {
     private static PostRepository postRepository;
 
@@ -32,7 +34,15 @@ public class PostService {
 
     // Excluir
     public boolean excluir(Integer id) throws Exception{
+        id = idToEdit;
         return postRepository.excluir(id);
     }
+    public static int autenticarPost() {
+        int postID = postRepository.buscarPostID();
+        return postID;
+    }
+
+
 }
+
 
