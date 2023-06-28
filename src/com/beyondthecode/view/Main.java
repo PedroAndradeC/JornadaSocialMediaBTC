@@ -1,16 +1,14 @@
 package com.beyondthecode.view;//<<<<<<< Updated upstream
-import com.beyondthecode.entity.Post;
 import com.beyondthecode.entity.User;
 import com.beyondthecode.entity.enums.Message;
 import com.beyondthecode.entity.interfaces.DeletePost;
 import com.beyondthecode.entity.interfaces.EditPost;
-import com.beyondthecode.service.UsuarioService;
+import com.beyondthecode.service.UserService;
 
-import java.util.Optional;
 import java.util.Scanner;
 
 public class Main implements EditPost, DeletePost {
-  private static UsuarioService usuarioservice = new UsuarioService();
+  private static UserService usuarioservice = new UserService();
   public static void main(String[] args) throws Exception {
     Scanner sc = new Scanner(System.in);
     int menu;
@@ -107,12 +105,12 @@ public class Main implements EditPost, DeletePost {
     String senha = sc.nextLine();
 
     // Verificar a autenticação no banco de dados
-    User user = UsuarioService.autenticarUsuario(email, senha);
+    User user = UserService.autenticarUsuario(email, senha);
     if (user != null) {
-      UsuarioService usuarioService = new UsuarioService();
+      UserService userService = new UserService();
       System.out.println("Login bem-sucedido! Bem-vindo, " + user.getName() + "!");
       // Definir usuário como logado
-      usuarioService.setUsuarioLogado(user);
+      userService.setUsuarioLogado(user);
       boolean validar = true;
       while(validar == true){
         System.out.println("---- MENU ----");
@@ -142,9 +140,9 @@ public class Main implements EditPost, DeletePost {
   }
 
   public static void EditUser() throws Exception {
-    UsuarioService usuarioService = new UsuarioService();
-    if (usuarioService.setUsuarioLogado()) {
-      User user = usuarioService.getUsuarioLogado();
+    UserService userService = new UserService();
+//    if (usuarioService.setUsuarioLogado()) {
+      User user = userService.getUsuarioLogado();
       Scanner sc = new Scanner(System.in);
 
       System.out.println("Editar Usuário:");
@@ -161,7 +159,7 @@ public class Main implements EditPost, DeletePost {
           sc.nextLine();
           String newName = sc.nextLine();
           user.setName(newName);
-          usuarioService.editar(user); // Atualiza o usuário no banco de dados
+          userService.editar(user); // Atualiza o usuário no banco de dados
           System.out.println("Nome atualizado com sucesso!");
           break;
 
@@ -170,7 +168,7 @@ public class Main implements EditPost, DeletePost {
           sc.nextLine();
           String newPassword = sc.nextLine();
           user.setPassword(newPassword);
-          usuarioService.editar(user); // Atualiza o usuário no banco de dados
+          userService.editar(user); // Atualiza o usuário no banco de dados
           System.out.println("Senha atualizada com sucesso!");
           break;
 
@@ -179,7 +177,7 @@ public class Main implements EditPost, DeletePost {
           sc.nextLine();
           String newEmail = sc.nextLine();
           user.setEmail(newEmail);
-          usuarioService.editar(user); // Atualiza o usuário no banco de dados
+          userService.editar(user); // Atualiza o usuário no banco de dados
           System.out.println("E-mail atualizado com sucesso!");
           break;
 
@@ -190,10 +188,10 @@ public class Main implements EditPost, DeletePost {
         default:
           System.out.println("Opção inválida!");
       }
-    } else {
-      System.out.println("Nenhum usuário logado. Faça login antes de editar.");
     }
-  }
+//    else {
+//      System.out.println("Nenhum usuário logado. Faça login antes de editar.");
+//    }
   public static void ExcluirUser() throws Exception {
     Scanner sc = new Scanner(System.in);
     User user = new User();

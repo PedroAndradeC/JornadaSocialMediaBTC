@@ -58,7 +58,7 @@ public class UserRepository {
         Connection connection = null;
         try{
             connection = ConexaoDB.getConnection();
-            String sql = "SELECT * FROM JORNADA.USUARIO";
+            String sql = "SELECT * FROM USUARIO";
             Statement statement = connection.createStatement();
             ResultSet res = statement.executeQuery(sql);
             while(res.next()) {
@@ -83,29 +83,29 @@ public class UserRepository {
         return listaUsuarios;
     }
     public boolean editar(User user) {
-        UserRepository userRepository = new UserRepository();
+//        UserRepository userRepository = new UserRepository();
         Connection connection = null;
         try {
             // abrir conexao
             connection = ConexaoDB.getConnection();
 
             int idUsuario = 0;
-            if (userRepository.isUsuarioLogado()) {
-                User usuarioLogado = userRepository.getUsuarioLogado();
+            if (isUsuarioLogado()) {
+                User usuarioLogado = getUsuarioLogado();
                 idUsuario = usuarioLogado.getId();
             }
             // update
             String sql = "UPDATE usuario SET " +
                     "nome = ?, " +
-                    "email = ?, " +
-                    "senha = ? " +
+                    "senha = ?, " +
+                    "email = ? " +
                     "WHERE id_user = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getEmail());
             preparedStatement.setInt(4, idUsuario);
 
             //executar
@@ -132,7 +132,7 @@ public class UserRepository {
         try {
             connection = ConexaoDB.getConnection();
 
-            String sql = "delete from jornada where id_usuario = ?";
+            String sql = "delete from jornada1 where id_user = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
@@ -162,7 +162,7 @@ public class UserRepository {
             connection = ConexaoDB.getConnection();
 
             // Consulta SQL
-            String sql = "SELECT * FROM JORNADA.USUARIO WHERE email = ?";
+            String sql = "SELECT * FROM USUARIO WHERE email = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, email);
 
