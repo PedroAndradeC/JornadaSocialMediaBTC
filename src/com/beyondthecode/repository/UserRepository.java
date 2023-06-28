@@ -6,6 +6,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.beyondthecode.view.Main.idLog;
+
 public class UserRepository {
     private User usuarioLogado;
     public User salvarUserDB(User user) {
@@ -66,6 +68,7 @@ public class UserRepository {
                 user.setId(res.getInt("id_user"));
                 user.setName(res.getString("nome"));
                 user.setEmail(res.getString("email"));
+                user.setPassword(res.getString("senha"));
                 listaUsuarios.add(user);
             }
         } catch (SQLException ex) {
@@ -83,34 +86,45 @@ public class UserRepository {
         return listaUsuarios;
     }
     public boolean editar(User user) {
-//        UserRepository userRepository = new UserRepository();
+        String sql = "UPDATE usuario SET ";
         Connection connection = null;
         try {
             // abrir conexao
             connection = ConexaoDB.getConnection();
 
-            int idUsuario = 0;
-            if (isUsuarioLogado()) {
-                User usuarioLogado = getUsuarioLogado();
-                idUsuario = usuarioLogado.getId();
-            }
             // update
-            String sql = "UPDATE usuario SET " +
-                    "nome = ?, " +
-                    "senha = ?, " +
-                    "email = ? " +
-                    "WHERE id_user = ?";
+            if (user.getName() != null && !user.getName().isEmpty()) {
+                sql = "UPDATE usuario SET nome = ? WHERE id_user = ?";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, user.getName());
+                preparedStatement.setInt(2, idLog);
+                //executar
+                int resultado = preparedStatement.executeUpdate();
+                return resultado > 0;
+            }
+            if (user.getEmail() != null && !user.getEmail().isEmpty()) {
+                sql = "UPDATE usuario SET email = ? WHERE id_user = ?";
 
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setInt(4, idUsuario);
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, user.getEmail());
+                preparedStatement.setInt(2, idLog);
+                //executar
+                int resultado = preparedStatement.executeUpdate();
+                return resultado > 0;
+            }
+            if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+                sql = "UPDATE usuario SET senha = ? WHERE id_user = ?";
 
-            //executar
-            int resultado = preparedStatement.executeUpdate();
-            return resultado > 0;
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, user.getPassword());
+                preparedStatement.setInt(2, idLog);
+                //executar
+                int resultado = preparedStatement.executeUpdate();
+                return resultado > 0;
+            }
+
+            return false;
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -132,7 +146,7 @@ public class UserRepository {
         try {
             connection = ConexaoDB.getConnection();
 
-            String sql = "delete from jornada1 where id_user = ?";
+            String sql = "delete from usuario where id_user = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);

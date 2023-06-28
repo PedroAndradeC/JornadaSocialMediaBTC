@@ -1,7 +1,10 @@
 package com.beyondthecode.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class User extends Comment{
-    private static Integer idIncrement = 0;
 
     private Integer id;
     private String email;
@@ -18,7 +21,6 @@ public class User extends Comment{
         this.email = email;
         this.password = password;
         this.name = name;
-        this.id = ++User.idIncrement;
     }
 
     public String getEmail() {
@@ -36,6 +38,9 @@ public class User extends Comment{
     public Integer getId() {
         return id;
     }
+    public Integer setId(int id) {
+        return this.id = id;
+    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -51,6 +56,7 @@ public class User extends Comment{
 
     @Override
     public String toString() {
-        return "nome: " + name + " email: " + email + " senha: " + password;
+        return "id:" + id + " nome: " + name + " email: " + email + " senha: " + password;
     }
+
 }

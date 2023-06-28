@@ -32,13 +32,10 @@ public class UserService {
     }
 
     // Excluir
-    public boolean excluir(Integer id) {
+    public boolean excluir(Integer id) throws Exception{
         return userRepository.excluir(id);
     }
 
-    public void validarUser(User user) {
-        // Implementação do método validarUser
-    }
 
     public static User autenticarUsuario(String email, String senha) {
         User user = userRepository.buscarUsuarioPorEmail(email);
@@ -46,20 +43,5 @@ public class UserService {
             return user;
         }
         return null;
-    }
-
-    // Verificar se usuário está logado
-    public boolean isUsuarioLogado() {
-        return userRepository.isUsuarioLogado();
-    }
-
-    // Setar usuário logado
-    public void setUsuarioLogado(User user) {
-        usuarioLogado = user;
-    }
-
-    // Obter usuário logado
-    public User getUsuarioLogado() {
-        return usuarioLogado;
     }
 }

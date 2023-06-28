@@ -8,6 +8,7 @@ import com.beyondthecode.service.UserService;
 import java.util.Scanner;
 
 public class Main implements EditPost, DeletePost {
+  public static int idLog;
   private static UserService usuarioservice = new UserService();
   public static void main(String[] args) throws Exception {
     Scanner sc = new Scanner(System.in);
@@ -107,16 +108,15 @@ public class Main implements EditPost, DeletePost {
     // Verificar a autenticação no banco de dados
     User user = UserService.autenticarUsuario(email, senha);
     if (user != null) {
-      UserService userService = new UserService();
       System.out.println("Login bem-sucedido! Bem-vindo, " + user.getName() + "!");
-      // Definir usuário como logado
-      userService.setUsuarioLogado(user);
+      idLog = user.getId();
       boolean validar = true;
       while(validar == true){
         System.out.println("---- MENU ----");
         System.out.println("1 - Posts");
         System.out.println("2 - Editar Conta");
         System.out.println("3 - Excluir Conta");
+        System.out.println("4 - Amigos");
         System.out.println("9 - LOGOUT");
 
         int menu = sc.nextInt();
@@ -130,6 +130,9 @@ public class Main implements EditPost, DeletePost {
           case 3:
             ExcluirUser();
             break;
+          case 4:
+            usuarioservice.listar();
+            break;
           case 9:
             validar = false;
         }
@@ -140,17 +143,13 @@ public class Main implements EditPost, DeletePost {
   }
 
   public static void EditUser() throws Exception {
-    UserService userService = new UserService();
-//    if (usuarioService.setUsuarioLogado()) {
-      User user = userService.getUsuarioLogado();
+      User user = new User();
       Scanner sc = new Scanner(System.in);
-
       System.out.println("Editar Usuário:");
       System.out.println("1 - Editar Nome");
       System.out.println("2 - Editar Senha");
       System.out.println("3 - Editar E-mail");
       System.out.println("9 - Voltar");
-
       int menu = sc.nextInt();
 
       switch (menu) {
@@ -159,7 +158,7 @@ public class Main implements EditPost, DeletePost {
           sc.nextLine();
           String newName = sc.nextLine();
           user.setName(newName);
-          userService.editar(user); // Atualiza o usuário no banco de dados
+          usuarioservice.editar(user); // Atualiza o usuário no banco de dados
           System.out.println("Nome atualizado com sucesso!");
           break;
 
@@ -168,7 +167,7 @@ public class Main implements EditPost, DeletePost {
           sc.nextLine();
           String newPassword = sc.nextLine();
           user.setPassword(newPassword);
-          userService.editar(user); // Atualiza o usuário no banco de dados
+          usuarioservice.editar(user); // Atualiza o usuário no banco de dados
           System.out.println("Senha atualizada com sucesso!");
           break;
 
@@ -177,7 +176,7 @@ public class Main implements EditPost, DeletePost {
           sc.nextLine();
           String newEmail = sc.nextLine();
           user.setEmail(newEmail);
-          userService.editar(user); // Atualiza o usuário no banco de dados
+          usuarioservice.editar(user); // Atualiza o usuário no banco de dados
           System.out.println("E-mail atualizado com sucesso!");
           break;
 
@@ -189,25 +188,37 @@ public class Main implements EditPost, DeletePost {
           System.out.println("Opção inválida!");
       }
     }
-//    else {
-//      System.out.println("Nenhum usuário logado. Faça login antes de editar.");
-//    }
   public static void ExcluirUser() throws Exception {
     Scanner sc = new Scanner(System.in);
     User user = new User();
     boolean validar = true;
     while(validar == true){
-      System.out.println("Para excluir seu usuario aperte 1 e digite a sua senha, para Voltar aperte 2");
+      System.out.println("Para excluir seu usuario aperte 1, para Voltar aperte 2");
       System.out.println("1 - Excluir Conta");
       System.out.println("2 - Voltar");
 
       int menu = sc.nextInt();
       switch (menu) {
         case 1:
-
+          System.out.println("Tem certeza que deseja excluir sua conta? - 1");
+          System.out.println("Voltar - 2");
+          int z = sc.nextInt();
+          switch (z) {
+            case 1:
+              System.out.println("Conta excluida com sucesso!");
+              System.out.println("Encerrando sessão!");
+              usuarioservice.excluir(idLog);
+              System. exit(0);
+            case 2:
+              validar = false;
+            default:
+              System.out.println("Opção inválida!");
+          }
           break;
         case 2:
           validar = false;
+        default:
+          System.out.println("Opção inválida!");
       }
     }
   }
