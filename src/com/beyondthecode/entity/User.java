@@ -1,10 +1,7 @@
 package com.beyondthecode.entity;
 
-import java.util.ArrayList;
-import java.util.List;
 
-
-public class User extends Comment{
+public class User extends Comment{ // excluir essa extensão
 
     private Integer id;
     private String email;
@@ -12,15 +9,6 @@ public class User extends Comment{
     private String name;
 
     public User () {
-        super();
-        this.name = name;
-    }
-
-    public User (String email, String password, String name) {
-        super();
-        this.email = email;
-        this.password = password;
-        this.name = name;
     }
 
     public String getEmail() {
@@ -38,8 +26,8 @@ public class User extends Comment{
     public Integer getId() {
         return id;
     }
-    public Integer setId(int id) {
-        return this.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setPassword(String password) {
@@ -60,3 +48,4 @@ public class User extends Comment{
     }
 
 }
+

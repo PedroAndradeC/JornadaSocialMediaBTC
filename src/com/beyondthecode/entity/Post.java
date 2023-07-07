@@ -3,15 +3,13 @@ package com.beyondthecode.entity;
 public class Post {
     private String contents;
     private String title;
-    private Integer id;
+    private Integer idPost;
+    private User user;
 
     public Post( ) {
-        super();
-        this.title = title;
     }
 
     public Post (String title, String contents) {
-        super();
         this.title = title;
         this.contents = contents;
     }
@@ -23,8 +21,8 @@ public class Post {
         return contents;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdPost() {
+        return idPost;
     }
 
     public void setTitle(String title) {
@@ -35,13 +33,14 @@ public class Post {
         this.contents = contents;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdPost(Integer idPost) {
+        this.idPost = idPost;
     }
 
     @Override
     public String toString() {
-        return "-----------------------------------------------\n"+"Titulo:  " + title + "\nConteudo: " + contents + "\nID do Post: " + id +"\n-----------------------------------------------";
+        return "\n"+"Titulo:  " + title + "\nConteudo: " + contents + "\nID do Post: " + idPost +"\n-----------------------------------------------";
     }
 
 }
+

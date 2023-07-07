@@ -146,12 +146,17 @@ public class UserRepository {
         try {
             connection = ConexaoDB.getConnection();
 
-            String sql = "delete from usuario where id_user = ?";
+            // Excluir os posts associados ao usuário
+            String deletePostsSql = "DELETE FROM post WHERE id_user = ?";
+            PreparedStatement deletePostsStatement = connection.prepareStatement(deletePostsSql);
+            deletePostsStatement.setInt(1, id);
+            deletePostsStatement.executeUpdate();
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
-
-            int resultado = preparedStatement.executeUpdate();
+            // Excluir o usuário
+            String deleteUserSql = "DELETE FROM usuario WHERE id_user = ?";
+            PreparedStatement deleteUserStatement = connection.prepareStatement(deleteUserSql);
+            deleteUserStatement.setInt(1, id);
+            int resultado = deleteUserStatement.executeUpdate();
             return resultado > 0;
         } catch(SQLException ex){
             ex.printStackTrace();

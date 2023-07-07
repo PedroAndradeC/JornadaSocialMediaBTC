@@ -1,14 +1,17 @@
 package com.beyondthecode.service;
 
 import com.beyondthecode.entity.Post;
+import com.beyondthecode.entity.User;
 import com.beyondthecode.repository.PostRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.beyondthecode.view.Main.idToEdit;
 
 public class PostService {
     private static PostRepository postRepository;
+    private Post[] posts;
 
     public PostService() {
         postRepository = new PostRepository();
@@ -17,6 +20,7 @@ public class PostService {
     // Salvar no banco
     public Post salvarPost(Post post) throws Exception {
         Post postSalvo = postRepository.salvarPost(post);
+        System.out.println("Post salvo! " + postSalvo);
         return postSalvo;
     }
 
@@ -42,7 +46,7 @@ public class PostService {
         return postID;
     }
 
-
 }
+
 
 

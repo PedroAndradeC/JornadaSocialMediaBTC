@@ -8,6 +8,7 @@ import java.util.List;
 public class UserService {
     private static UserRepository userRepository;
     private static User usuarioLogado;
+    private List<User> users;
 
     public UserService() {
         userRepository = new UserRepository();

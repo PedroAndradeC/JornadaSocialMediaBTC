@@ -20,12 +20,12 @@ public class PostRepository {
             Statement statement = connection.createStatement();
             ResultSet retorno = statement.executeQuery(sqlSequence);
 
-            Integer proximoId = -1;
+            int proximoId = -1;
             if (retorno.next()) {
                 proximoId = retorno.getInt("proxval");
             }
 
-            String sql = "INSERT INTO JORNADA.POST (ID_POST,TITULO,CONTEUDO,ID_USER) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO JORNADA1.POST (ID_POST,TITULO,CONTEUDO,ID_USER) VALUES (?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, proximoId);
@@ -36,7 +36,7 @@ public class PostRepository {
             int resposta = preparedStatement.executeUpdate();
             System.out.println("salvarPost.resposta = " + resposta);
 
-            post.setId(proximoId);
+            post.setIdPost(proximoId);
             return post;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -64,7 +64,7 @@ public class PostRepository {
             ResultSet res = statement.executeQuery(sql);
             while(res.next()) {
                 Post post = new Post();
-                post.setId(res.getInt("id_post"));
+                post.setIdPost(res.getInt("id_post"));
                 post.setTitle(res.getString("titulo"));
                 post.setContents(res.getString("conteudo"));
                 listaPost.add(post);
@@ -92,7 +92,7 @@ public class PostRepository {
 
             // update
             if (post.getTitle() != null && !post.getTitle().isEmpty()) {
-                sql = "UPDATE JORNADA.POST SET titulo = ? WHERE id_user = ?";
+                sql = "UPDATE JORNADA1.POST SET titulo = ? WHERE id_user = ?";
 
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setString(1, post.getTitle());
@@ -102,7 +102,7 @@ public class PostRepository {
                 return resultado > 0;
             }
             if (post.getContents() != null && !post.getContents().isEmpty()) {
-                sql = "UPDATE JORNADA.POST SET conteudo = ? WHERE id_user = ?";
+                sql = "UPDATE JORNADA1.POST SET conteudo = ? WHERE id_user = ?";
 
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setString(1, post.getContents());
